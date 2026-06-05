@@ -1,0 +1,38 @@
+services:
+  app-dev:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - ENVIRONMENT=development
+      - APP_VERSION=0.1.0
+    volumes:
+      - .:/app
+    command: flask run --host=0.0.0.0 --port=5000 --reload
+
+  app-test:
+    build: .
+    ports:
+      - "5001:5000"
+    environment:
+      - ENVIRONMENT=test
+      - APP_VERSION=latest
+    command: gunicorn --bind 0.0.0.0:5000 "app:create_app()"
+
+  app-staging:
+    build: .
+    ports:
+      - "5002:5000"
+    environment:
+      - ENVIRONMENT=staging
+      - APP_VERSION=latest
+    command: gunicorn --bind 0.0.0.0:5000 "app:create_app()"
+
+  app-prod:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - ENVIRONMENT=production
+      - APP_VERSION=latest
+    command: gunicorn --bind 0.0.0.0:5000 "app:create_app()"
