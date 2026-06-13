@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}eKart - Your Online Store{% endblock %}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div id="dialog-notifications-success" title="Notification" style="display:none;"></div>
+    <div id="dialog-notifications-error" title="Error" style="display:none;"></div>
+    <div id="bar-notification" class="bar-notification">
+        <span class="close" title="Close">&nbsp;</span>
+    </div>
+
+    <div class="master-wrapper-page">
+        <div class="master-wrapper-content">
+            <div class="header">
+                <div class="header-logo">
+                    <a href="/">
+                        <img title="" alt="eKart Store" src="https://via.placeholder.com/250x60/4a90d9/ffffff?text=eKart">
+                    </a>
+                </div>
+                <div class="header-links-wrapper">
+                    <div class="header-links">
+                        <ul>
+                            <li><a href="/register" class="ico-register">Register</a></li>
+                            <li><a href="/login" class="ico-login">Log in</a></li>
+                            <li id="topcartlink">
+                                <a href="/cart" class="ico-cart">
+                                    <span class="cart-label">Shopping cart</span>
+                                    <span class="cart-qty">({{ session.get('cart', [])|length }})</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/wishlist" class="ico-wishlist">
+                                    <span class="cart-label">Wishlist</span>
+                                    <span class="wishlist-qty">(0)</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="search-box">
+                    <form action="/search" method="get">
+                        <input type="text" class="search-box-text" id="small-searchterms" autocomplete="off" value="Search store" name="q" />
+                        <input type="submit" class="button-1 search-box-button" value="Search" />
+                    </form>
+                </div>
+                <div class="header-selectors-wrapper">
+                    <div class="currency-selector"></div>
+                    <div class="language-selector"></div>
+                </div>
+            </div>
+
+            <div class="header-menu">
+                <ul class="top-menu">
+                    <li><a href="/books">Books</a></li>
+                    <li>
+                        <a href="/computers">Computers</a>
+                        <div class="top-menu-triangle"></div>
+                        <ul class="sublist firstLevel">
+                            <li><a href="/desktops">Desktops</a></li>
+                            <li><a href="/notebooks">Notebooks</a></li>
+                            <li><a href="/accessories">Accessories</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="/electronics">Electronics</a>
+                        <div class="top-menu-triangle"></div>
+                        <ul class="sublist firstLevel">
+                            <li><a href="/camera-photo">Camera, photo</a></li>
+                            <li><a href="/cell-phones">Cell phones</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="/apparel-shoes">Apparel &amp; Shoes</a></li>
+                    <li><a href="/digital-downloads">Digital downloads</a></li>
+                    <li><a href="/jewelry">Jewelry</a></li>
+                    <li><a href="/gift-cards">Gift Cards</a></li>
+                </ul>
+            </div>
+
+            <div class="ajax-loading-block-window" style="display: none">
+                <div class="loading-image"></div>
+            </div>
+
+            <div class="master-wrapper-main">
+                {% block sidebar_left %}
+                <div class="leftside-3">
+                    <div class="block block-category-navigation">
+                        <div class="title"><strong>Categories</strong></div>
+                        <div class="listbox">
+                            <ul class="list">
+                                <li class="inactive"><a href="/books">Books</a></li>
+                                <li class="inactive"><a href="/computers">Computers</a></li>
+                                <li class="inactive"><a href="/electronics">Electronics</a></li>
+                                <li class="inactive"><a href="/apparel-shoes">Apparel &amp; Shoes</a></li>
+                                <li class="inactive"><a href="/digital-downloads">Digital downloads</a></li>
+                                <li class="inactive"><a href="/jewelry">Jewelry</a></li>
+                                <li class="inactive"><a href="/gift-cards">Gift Cards</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="block block-manufacturer-navigation">
+                        <div class="title"><strong>Manufacturers</strong></div>
+                        <div class="listbox">
+                            <ul class="list">
+                                <li class="inactive"><a href="/tricentis">eKart</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="block block-popular-tags">
+                        <div class="title"><strong>Popular tags</strong></div>
+                        <div class="listbox">
+                            <div class="tags">
+                                <ul>
+                                    <li><a href="/producttag/4/apparel" style="font-size:100%;">apparel</a></li>
+                                    <li><a href="/producttag/8/awesome" style="font-size:120%;">awesome</a></li>
+                                    <li><a href="/producttag/10/book" style="font-size:90%;">book</a></li>
+                                    <li><a href="/producttag/13/camera" style="font-size:85%;">camera</a></li>
+                                    <li><a href="/producttag/12/cell" style="font-size:85%;">cell</a></li>
+                                    <li><a href="/producttag/6/computer" style="font-size:100%;">computer</a></li>
+                                    <li><a href="/producttag/3/cool" style="font-size:120%;">cool</a></li>
+                                    <li><a href="/producttag/16/digital" style="font-size:85%;">digital</a></li>
+                                </ul>
+                            </div>
+                            <div class="view-all">
+                                <a href="/producttag/all">View all</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endblock %}
+
+                <div class="center-3">
+                    {% block content %}{% endblock %}
+                </div>
+
+                {% block sidebar_right %}
+                <div class="rightside-3">
+                    <div class="block block-newsletter">
+                        <div class="title"><strong>Newsletter</strong></div>
+                        <div class="listbox">
+                            <div id="newsletter-subscribe-block" class="newsletter-subscribe-block">
+                                <span>Sign up for our newsletter:</span>
+                                <div class="newsletter-email">
+                                    <input id="newsletter-email" name="NewsletterEmail" type="text" value="" />
+                                </div>
+                                <div class="buttons">
+                                    <input type="button" value="Subscribe" id="newsletter-subscribe-button" class="button-1 newsletter-subscribe-button" />
+                                </div>
+                            </div>
+                            <div id="newsletter-result-block" class="newsletter-result-block"></div>
+                        </div>
+                    </div>
+                    <div class="block block-poll">
+                        <div class="title"><strong>Community poll</strong></div>
+                        <div class="listbox">
+                            <div class="poll" id="poll-block-1">
+                                <strong class="poll-display-text">Do you like eKart?</strong>
+                                <ul class="poll-options">
+                                    <li class="answer">
+                                        <input id="pollanswers-1" type="radio" name="pollanswers-1" value="1" />
+                                        <label for="pollanswers-1">Excellent</label>
+                                    </li>
+                                    <li class="answer">
+                                        <input id="pollanswers-2" type="radio" name="pollanswers-1" value="2" />
+                                        <label for="pollanswers-2">Good</label>
+                                    </li>
+                                    <li class="answer">
+                                        <input id="pollanswers-3" type="radio" name="pollanswers-1" value="3" />
+                                        <label for="pollanswers-3">Poor</label>
+                                    </li>
+                                    <li class="answer">
+                                        <input id="pollanswers-4" type="radio" name="pollanswers-1" value="4" />
+                                        <label for="pollanswers-4">Very bad</label>
+                                    </li>
+                                </ul>
+                                <div class="buttons">
+                                    <input type="button" value="Vote" id="vote-poll-1" class="button-2 vote-poll-button" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endblock %}
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="footer-menu-wrapper">
+                <div class="column information">
+                    <h3>Information</h3>
+                    <ul>
+                        <li><a href="/sitemap">Sitemap</a></li>
+                        <li><a href="/shipping-returns">Shipping &amp; Returns</a></li>
+                        <li><a href="/privacy-policy">Privacy Notice</a></li>
+                        <li><a href="/conditions-of-use">Conditions of Use</a></li>
+                        <li><a href="/about-us">About us</a></li>
+                        <li><a href="/contactus">Contact us</a></li>
+                    </ul>
+                </div>
+                <div class="column customer-service">
+                    <h3>Customer service</h3>
+                    <ul>
+                        <li><a href="/search">Search</a></li>
+                        <li><a href="/news">News</a></li>
+                        <li><a href="/blog">Blog</a></li>
+                        <li><a href="/recentlyviewedproducts">Recently viewed products</a></li>
+                        <li><a href="/compareproducts">Compare products list</a></li>
+                        <li><a href="/newproducts">New products</a></li>
+                    </ul>
+                </div>
+                <div class="column my-account">
+                    <h3>My account</h3>
+                    <ul>
+                        <li><a href="/customer/info" class="account">My account</a></li>
+                        <li><a href="/customer/orders">Orders</a></li>
+                        <li><a href="/customer/addresses">Addresses</a></li>
+                        <li><a href="/cart" class="ico-cart">Shopping cart</a></li>
+                        <li><a href="/wishlist" class="ico-wishlist">Wishlist</a></li>
+                    </ul>
+                </div>
+                <div class="column follow-us">
+                    <h3>Follow us</h3>
+                    <ul>
+                        <li class="facebook"><a href="#" target="_blank">Facebook</a></li>
+                        <li class="twitter"><a href="#" target="_blank">Twitter</a></li>
+                        <li class="rss"><a href="#">RSS</a></li>
+                        <li class="youtube"><a href="#" target="_blank">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-poweredby">
+                Powered by <a href="#">eKart</a>
+            </div>
+            <div class="footer-disclaimer">
+                Copyright &copy; 2026 eKart Store. All rights reserved.
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}eKart - Your Online Store{% endblock %}
+{% block content %}
+<div class="page home-page">
+    <div class="page-body">
+        <div class="slider-wrapper">
+            <div class="slider">
+                <div class="slider-item">
+                    <a href="#">
+                        <img src="https://via.placeholder.com/880x250/4a90d9/ffffff?text=Welcome+to+eKart" alt="Welcome to eKart" />
+                    </a>
+                </div>
+                <div class="slider-item">
+                    <a href="#">
+                        <img src="https://via.placeholder.com/880x250/50b86c/ffffff?text=Great+Deals+Await" alt="Great Deals" />
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic-html-content">
+            <div class="topic-html-content-title">
+                <h2 class="topic-html-content-header">Welcome to eKart Store</h2>
+            </div>
+            <div class="topic-html-content-body">
+                <p>Welcome to eKart - your one-stop shop for everything!</p>
+                <p>Browse our wide selection of products and enjoy great prices.</p>
+            </div>
+        </div>
+
+        <div class="product-grid home-page-product-grid">
+            <div class="title"><strong>Featured products</strong></div>
+            {% for product in products %}
+            <div class="item-box">
+                <div class="product-item" data-productid="{{ product.id }}">
+                    <div class="picture">
+                        <a href="/product/{{ product.id }}" title="Show details for {{ product.name }}">
+                            <img alt="Picture of {{ product.name }}" src="{{ product.image }}" title="Show details for {{ product.name }}" />
+                        </a>
+                    </div>
+                    <div class="details">
+                        <h2 class="product-title">
+                            <a href="/product/{{ product.id }}">{{ product.name }}</a>
+                        </h2>
+                        <div class="product-rating-box">
+                            <div class="rating">
+                                <div style="width: {{ product.rating_percent }}%"></div>
+                            </div>
+                        </div>
+                        <div class="description">{{ product.description }}</div>
+                        <div class="add-info">
+                            <div class="prices">
+                                <span class="price actual-price">{{ "%.2f"|format(product.price) }}</span>
+                            </div>
+                            <div class="buttons">
+                                <form action="/add-to-cart/{{ product.id }}" method="post">
+                                    <input type="button" value="Add to cart" class="button-2 product-box-add-to-cart-button" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
