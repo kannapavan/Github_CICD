@@ -51,3 +51,4 @@
 - **Makefile** — `make lint`, `make test`, `make build`, `make run`
 - **Logging** — structlog for structured logging
 - **Health checks** — `/health` and `/ready` endpoints
+## test input
